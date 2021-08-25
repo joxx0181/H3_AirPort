@@ -1,0 +1,79 @@
+CREATE TABLE [Flight] (
+  [FlightNum] int PRIMARY KEY,
+  [FlightName] nvarchar(255)
+)
+GO
+
+CREATE TABLE [Airline] (
+  [AirlineId] int PRIMARY KEY IDENTITY(1,1),
+  [AirlineName] nvarchar(255),
+  [FlightNum] int FOREIGN KEY REFERENCES Flight(FlightNum)
+)
+GO
+
+CREATE TABLE [FlightRoute] (
+  [RouteId] int PRIMARY KEY,
+  [Departure] nvarchar(255),
+  [Arrival] nvarchar(255),
+  [RouteOwner] int
+)
+GO
+
+CREATE TABLE [Operater] (
+  [Id] int PRIMARY KEY,
+  [RouteId] int FOREIGN KEY REFERENCES FlightRoute(RouteId),
+  [AirlineId] int FOREIGN KEY REFERENCES Airline(AirlineId)
+)
+GO
+
+CREATE TABLE [City] (
+  [ZipCode] int PRIMARY KEY,
+  [CityName] nvarchar(255)
+)
+GO
+
+CREATE TABLE [AirportTerminal] (
+  [AirportId] int PRIMARY KEY IDENTITY(1,5),
+  [IATA] nvarchar(255),
+  [AirportName] nvarchar(255),
+  [TerminalName] nvarchar(255),
+  [RouteId] int FOREIGN KEY REFERENCES FlightRoute(RouteId),
+  [ZipCode] int FOREIGN KEY REFERENCES City(ZipCode)
+)
+GO
+
+
+
+--AirportTerminal inserts
+INSERT INTO AirportTerminal (IATA, AirportName, TerminalName, RouteId, ZipCode) VALUES ('CPH', 'Kastrup', 'Terminal 3', 1, 2770);
+INSERT INTO AirportTerminal (IATA, AirportName, TerminalName, RouteId, ZipCode) VALUES ('JFK', 'New York', 'Terminal 2', 2, 10001);
+INSERT INTO AirportTerminal (IATA, AirportName, TerminalName, RouteId, ZipCode) VALUES ('BLL', 'Billund', 'Terminal 1', 3, 7190);
+INSERT INTO AirportTerminal (IATA, AirportName, TerminalName, RouteId, ZipCode) VALUES ('CDG', 'Charles de Gaulle', 'Terminal 3', 4, 95700);
+
+--City inserts
+INSERT INTO City (ZipCode, CityName) VALUES (2770, 'København'); 
+INSERT INTO City (ZipCode, CityName) VALUES (10001, 'New York');
+INSERT INTO City (ZipCode, CityName) VALUES (7190, 'Billund'); 
+INSERT INTO City (ZipCode, CityName) VALUES (95700, 'Paris');
+
+--Operator inserts
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (100, 1, 1);
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (110, 2, 1);
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (120, 3, 1);
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (130, 4, 2);
+
+--FlightRoute inserts
+INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (1, 'CPH', 'AMS', 10);
+INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (2, 'JFK', 'CPH', 10);
+INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (3, 'BLL', 'LHR', 20);
+INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (4, 'CDG', 'JKF', 30);
+
+--Airline inserts
+INSERT INTO Airline (AirlineName, FlightNum) VALUES ('SAS', 690)
+INSERT INTO Airline (AirlineName, FlightNum) VALUES ('Air France', 480)
+
+--Flight inserts
+INSERT INTO Flight (FlightNum, FlightName) VALUES (690, 'Airbus Viking')
+INSERT INTO Flight (FlightNum, FlightName) VALUES (480, 'Concorde RC')
+
+

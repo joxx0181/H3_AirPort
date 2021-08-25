@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e9808a590158490199fefcbd35b695ff" Name="Diagram1">
+        <EntityTypeShape EntityType="AirPortDbModel.Airline" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirPortDbModel.AirportTerminal" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirPortDbModel.City" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirPortDbModel.Flight" Width="1.5" PointX="1.5" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirPortDbModel.FlightRoute" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AirPortDbModel.Operater" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AirPortDbModel.FK__Airline__FlightN__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="AirPortDbModel.FK__Operater__Airlin__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="AirPortDbModel.FK__AirportTe__Route__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="AirPortDbModel.FK__AirportTe__ZipCo__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="AirPortDbModel.FK__Operater__RouteI__2B3F6F97" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

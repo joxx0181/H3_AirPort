@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AirPortDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="AirlineId" />
+          </Key>
+          <Property Name="AirlineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AirlineName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FlightNum" Type="int" />
+        </EntityType>
+        <EntityType Name="AirportTerminal">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IATA" Type="nvarchar" MaxLength="255" />
+          <Property Name="AirportName" Type="nvarchar" MaxLength="255" />
+          <Property Name="TerminalName" Type="nvarchar" MaxLength="255" />
+          <Property Name="RouteId" Type="int" />
+          <Property Name="ZipCode" Type="int" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ZipCode" />
+          </Key>
+          <Property Name="ZipCode" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="FlightNum" />
+          </Key>
+          <Property Name="FlightNum" Type="int" Nullable="false" />
+          <Property Name="FlightName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="FlightRoute">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="int" Nullable="false" />
+          <Property Name="Departure" Type="nvarchar" MaxLength="255" />
+          <Property Name="Arrival" Type="nvarchar" MaxLength="255" />
+          <Property Name="RouteOwner" Type="int" />
+        </EntityType>
+        <EntityType Name="Operater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RouteId" Type="int" />
+          <Property Name="AirlineId" Type="int" />
+        </EntityType>
+        <Association Name="FK__Airline__FlightN__267ABA7A">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="Airline" Type="Self.Airline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightNum" />
+            </Principal>
+            <Dependent Role="Airline">
+              <PropertyRef Name="FlightNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AirportTe__Route__38996AB5">
+          <End Role="FlightRoute" Type="Self.FlightRoute" Multiplicity="0..1" />
+          <End Role="AirportTerminal" Type="Self.AirportTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightRoute">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="AirportTerminal">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AirportTe__ZipCo__398D8EEE">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="AirportTerminal" Type="Self.AirportTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ZipCode" />
+            </Principal>
+            <Dependent Role="AirportTerminal">
+              <PropertyRef Name="ZipCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operater__Airlin__2C3393D0">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="0..1" />
+          <End Role="Operater" Type="Self.Operater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="AirlineId" />
+            </Principal>
+            <Dependent Role="Operater">
+              <PropertyRef Name="AirlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operater__RouteI__2B3F6F97">
+          <End Role="FlightRoute" Type="Self.FlightRoute" Multiplicity="0..1" />
+          <End Role="Operater" Type="Self.Operater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightRoute">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="Operater">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirPortDbModelStoreContainer">
+          <EntitySet Name="Airline" EntityType="Self.Airline" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AirportTerminal" EntityType="Self.AirportTerminal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FlightRoute" EntityType="Self.FlightRoute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operater" EntityType="Self.Operater" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Airline__FlightN__267ABA7A" Association="Self.FK__Airline__FlightN__267ABA7A">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Airline" EntitySet="Airline" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AirportTe__Route__38996AB5" Association="Self.FK__AirportTe__Route__38996AB5">
+            <End Role="FlightRoute" EntitySet="FlightRoute" />
+            <End Role="AirportTerminal" EntitySet="AirportTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AirportTe__ZipCo__398D8EEE" Association="Self.FK__AirportTe__ZipCo__398D8EEE">
+            <End Role="City" EntitySet="City" />
+            <End Role="AirportTerminal" EntitySet="AirportTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operater__Airlin__2C3393D0" Association="Self.FK__Operater__Airlin__2C3393D0">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="Operater" EntitySet="Operater" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operater__RouteI__2B3F6F97" Association="Self.FK__Operater__RouteI__2B3F6F97">
+            <End Role="FlightRoute" EntitySet="FlightRoute" />
+            <End Role="Operater" EntitySet="Operater" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AirPortDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="AirlineId" />
+          </Key>
+          <Property Name="AirlineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AirlineName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FlightNum" Type="Int32" />
+          <NavigationProperty Name="Flight" Relationship="Self.FK__Airline__FlightN__267ABA7A" FromRole="Airline" ToRole="Flight" />
+          <NavigationProperty Name="Operater" Relationship="Self.FK__Operater__Airlin__2C3393D0" FromRole="Airline" ToRole="Operater" />
+        </EntityType>
+        <EntityType Name="AirportTerminal">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IATA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AirportName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TerminalName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RouteId" Type="Int32" />
+          <Property Name="ZipCode" Type="Int32" />
+          <NavigationProperty Name="FlightRoute" Relationship="Self.FK__AirportTe__Route__38996AB5" FromRole="AirportTerminal" ToRole="FlightRoute" />
+          <NavigationProperty Name="City" Relationship="Self.FK__AirportTe__ZipCo__398D8EEE" FromRole="AirportTerminal" ToRole="City" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ZipCode" />
+          </Key>
+          <Property Name="ZipCode" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AirportTerminal" Relationship="Self.FK__AirportTe__ZipCo__398D8EEE" FromRole="City" ToRole="AirportTerminal" />
+        </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="FlightNum" />
+          </Key>
+          <Property Name="FlightNum" Type="Int32" Nullable="false" />
+          <Property Name="FlightName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK__Airline__FlightN__267ABA7A" FromRole="Flight" ToRole="Airline" />
+        </EntityType>
+        <EntityType Name="FlightRoute">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="Int32" Nullable="false" />
+          <Property Name="Departure" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Arrival" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RouteOwner" Type="Int32" />
+          <NavigationProperty Name="AirportTerminal" Relationship="Self.FK__AirportTe__Route__38996AB5" FromRole="FlightRoute" ToRole="AirportTerminal" />
+          <NavigationProperty Name="Operater" Relationship="Self.FK__Operater__RouteI__2B3F6F97" FromRole="FlightRoute" ToRole="Operater" />
+        </EntityType>
+        <EntityType Name="Operater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RouteId" Type="Int32" />
+          <Property Name="AirlineId" Type="Int32" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK__Operater__Airlin__2C3393D0" FromRole="Operater" ToRole="Airline" />
+          <NavigationProperty Name="FlightRoute" Relationship="Self.FK__Operater__RouteI__2B3F6F97" FromRole="Operater" ToRole="FlightRoute" />
+        </EntityType>
+        <Association Name="FK__Airline__FlightN__267ABA7A">
+          <End Role="Flight" Type="Self.Flight" Multiplicity="0..1" />
+          <End Role="Airline" Type="Self.Airline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Flight">
+              <PropertyRef Name="FlightNum" />
+            </Principal>
+            <Dependent Role="Airline">
+              <PropertyRef Name="FlightNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operater__Airlin__2C3393D0">
+          <End Role="Airline" Type="Self.Airline" Multiplicity="0..1" />
+          <End Role="Operater" Type="Self.Operater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="AirlineId" />
+            </Principal>
+            <Dependent Role="Operater">
+              <PropertyRef Name="AirlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AirportTe__Route__38996AB5">
+          <End Role="FlightRoute" Type="Self.FlightRoute" Multiplicity="0..1" />
+          <End Role="AirportTerminal" Type="Self.AirportTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightRoute">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="AirportTerminal">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AirportTe__ZipCo__398D8EEE">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="AirportTerminal" Type="Self.AirportTerminal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ZipCode" />
+            </Principal>
+            <Dependent Role="AirportTerminal">
+              <PropertyRef Name="ZipCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Operater__RouteI__2B3F6F97">
+          <End Role="FlightRoute" Type="Self.FlightRoute" Multiplicity="0..1" />
+          <End Role="Operater" Type="Self.Operater" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FlightRoute">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="Operater">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirPortDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Airline" EntityType="Self.Airline" />
+          <EntitySet Name="AirportTerminal" EntityType="Self.AirportTerminal" />
+          <EntitySet Name="City" EntityType="Self.City" />
+          <EntitySet Name="Flight" EntityType="Self.Flight" />
+          <EntitySet Name="FlightRoute" EntityType="Self.FlightRoute" />
+          <EntitySet Name="Operater" EntityType="Self.Operater" />
+          <AssociationSet Name="FK__Airline__FlightN__267ABA7A" Association="Self.FK__Airline__FlightN__267ABA7A">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Airline" EntitySet="Airline" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operater__Airlin__2C3393D0" Association="Self.FK__Operater__Airlin__2C3393D0">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="Operater" EntitySet="Operater" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AirportTe__Route__38996AB5" Association="Self.FK__AirportTe__Route__38996AB5">
+            <End Role="FlightRoute" EntitySet="FlightRoute" />
+            <End Role="AirportTerminal" EntitySet="AirportTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AirportTe__ZipCo__398D8EEE" Association="Self.FK__AirportTe__ZipCo__398D8EEE">
+            <End Role="City" EntitySet="City" />
+            <End Role="AirportTerminal" EntitySet="AirportTerminal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Operater__RouteI__2B3F6F97" Association="Self.FK__Operater__RouteI__2B3F6F97">
+            <End Role="FlightRoute" EntitySet="FlightRoute" />
+            <End Role="Operater" EntitySet="Operater" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AirPortDbModelStoreContainer" CdmEntityContainer="AirPortDbEntities">
+          <EntitySetMapping Name="Airline">
+            <EntityTypeMapping TypeName="AirPortDbModel.Airline">
+              <MappingFragment StoreEntitySet="Airline">
+                <ScalarProperty Name="AirlineId" ColumnName="AirlineId" />
+                <ScalarProperty Name="AirlineName" ColumnName="AirlineName" />
+                <ScalarProperty Name="FlightNum" ColumnName="FlightNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AirportTerminal">
+            <EntityTypeMapping TypeName="AirPortDbModel.AirportTerminal">
+              <MappingFragment StoreEntitySet="AirportTerminal">
+                <ScalarProperty Name="AirportId" ColumnName="AirportId" />
+                <ScalarProperty Name="IATA" ColumnName="IATA" />
+                <ScalarProperty Name="AirportName" ColumnName="AirportName" />
+                <ScalarProperty Name="TerminalName" ColumnName="TerminalName" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="AirPortDbModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flight">
+            <EntityTypeMapping TypeName="AirPortDbModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="FlightNum" ColumnName="FlightNum" />
+                <ScalarProperty Name="FlightName" ColumnName="FlightName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FlightRoute">
+            <EntityTypeMapping TypeName="AirPortDbModel.FlightRoute">
+              <MappingFragment StoreEntitySet="FlightRoute">
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="Departure" ColumnName="Departure" />
+                <ScalarProperty Name="Arrival" ColumnName="Arrival" />
+                <ScalarProperty Name="RouteOwner" ColumnName="RouteOwner" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operater">
+            <EntityTypeMapping TypeName="AirPortDbModel.Operater">
+              <MappingFragment StoreEntitySet="Operater">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="AirlineId" ColumnName="AirlineId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
