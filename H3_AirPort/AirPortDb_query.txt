@@ -60,7 +60,10 @@ INSERT INTO City (ZipCode, CityName) VALUES (95700, 'Paris');
 INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (100, 1, 1);
 INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (110, 2, 1);
 INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (120, 3, 1);
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (140, 3, 4);
+INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (150, 4, 3);
 INSERT INTO Operater (Id, RouteId, AirlineId) VALUES (130, 4, 2);
+
 
 --FlightRoute inserts
 INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (1, 'CPH', 'AMS', 10);
@@ -71,9 +74,12 @@ INSERT INTO FlightRoute (RouteId, Departure, Arrival, RouteOwner) VALUES (4, 'CD
 --Airline inserts
 INSERT INTO Airline (AirlineName, FlightNum) VALUES ('SAS', 690)
 INSERT INTO Airline (AirlineName, FlightNum) VALUES ('Air France', 480)
+INSERT INTO Airline (AirlineName, FlightNum) VALUES ('SAS', 777)
+INSERT INTO Airline (AirlineName, FlightNum) VALUES ('Air France', 185)
 
 --Flight inserts
 INSERT INTO Flight (FlightNum, FlightName) VALUES (690, 'Airbus Viking')
 INSERT INTO Flight (FlightNum, FlightName) VALUES (480, 'Concorde RC')
-
+INSERT INTO Flight (FlightNum, FlightName) VALUES (185, 'Airbus Beluga XL')
+INSERT INTO Flight (FlightNum, FlightName) VALUES (777, 'Boeing')
 
